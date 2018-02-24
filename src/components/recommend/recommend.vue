@@ -14,7 +14,7 @@
 
 <script>
 import Slider from 'base/slider/slider'
-import getRecommendList from 'api/recommend'
+import { getRecommendList, getPlayList } from 'api/recommend'
 import { ERROR_CODE_OK } from 'api/config'
 
 export default {
@@ -23,17 +23,26 @@ export default {
   },
   data() {
     return {
-      recommends: []
+      recommends: [],
+      playList: []
     }
   },
   created () {
     this.getRecommendData()
+    this.getPlayListData()
   },
   methods: {
     getRecommendData() {
       getRecommendList().then((res) => {
         if (res.code === ERROR_CODE_OK) {
           this.recommends = res.data.slider
+        }
+      })
+    },
+    getPlayListData() {
+      getPlayList().then((res) => {
+        if (res.code === ERROR_CODE_OK) {
+          this.playList = res.data.list
         }
       })
     }
