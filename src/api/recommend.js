@@ -1,5 +1,5 @@
 import axios from 'axios'
-import jsonpTool from '@/common/js/jsonp'
+import jsonpTool from 'common/js/jsonp'
 import { commonParams, options } from './config'
 
 // 获取推荐列表 轮播图列表

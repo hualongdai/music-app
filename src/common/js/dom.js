@@ -8,3 +8,14 @@ export function addClass(el, className) {
 export function hasClass(el, className) {
   return el.classList.contains(className)
 }
+
+// 获取/设置 DOM结构 中data-* 值
+export function getDOMData(el, name, value) {
+  const prefix = 'data-'
+  name = `${prefix}${name}`
+  if (value) {
+    return el.setAttribute(name, value)
+  } else {
+    return el.getAttribute(name)
+  }
+}

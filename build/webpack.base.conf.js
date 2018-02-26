@@ -39,6 +39,7 @@ module.exports = {
       'base': resolve('src/base'),
       'api': resolve('src/api'),
       'stylus': resolve('src/common/stylus'),
+      'common': resolve('src/common'),
     }
   },
   module: {
