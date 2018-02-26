@@ -1,12 +1,12 @@
 <template>
   <div class="recommend">
-    <scroll class="recommend-content" :data="playList">
+    <scroll ref="scroll" class="recommend-content" :data="playList">
       <div>
         <div v-if="recommends.length">
           <slider>
             <div v-for="item in recommends" :key="item.id">
               <a :href="item.linkUrl">
-                <img :src="item.picUrl" class="item-img">
+                <img @load="loadImage" :src="item.picUrl">
               </a>
             </div>
           </slider>
@@ -16,7 +16,7 @@
           <ul>
             <li v-for="item in playList" :key="item.dissid" class="item">
               <div class="icon">
-                <img width="60" height="60" :src="item.imgurl">
+                <img width="60" height="60" v-lazy="item.imgurl">
               </div>
               <div class="text">
                 <h2 class="name" v-html="item.creator.name"></h2>
@@ -65,6 +65,13 @@ export default {
           this.playList = res.data.list
         }
       })
+    },
+    loadImage() {
+      // 这里只需要判断是否已经加载过了 避免反复执行refresh 方法
+      if (!this.loadedImage) {
+        this.$refs.scroll.refresh()
+        this.loadedImage = true
+      }
     }
   }
 }
