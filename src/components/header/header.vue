@@ -28,7 +28,7 @@ export default {}
       width: 32px
       height: 32px
       margin-right: 9px
-      background-image url(//y.gtimg.cn/mediastyle/mod/mobile/img/logo.svg?max_age=2592000)
+      background-image: url(//y.gtimg.cn/mediastyle/mod/mobile/img/logo.svg?max_age=2592000)
       background-size: 32px 32px
     .text
       display: inline-block
