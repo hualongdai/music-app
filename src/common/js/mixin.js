@@ -1,5 +1,6 @@
 /**
  * 在VUE中，如果几个组件都要做类似的事，那么就用mixin 来做
+ * 在VUE component 的方法会覆盖mixin 定义的方法
  */
 
 import { mapGetters } from 'vuex'
