@@ -6,7 +6,7 @@
   <h1 class="title" v-html="title"></h1>
   <div class="bg-image" :style="bgStyle" ref="bgImage">
     <div class="play-wrapper">
-      <div ref="playBtn" v-show="songs.length>0" class="play">
+      <div ref="playBtn" @click="random" v-show="songs.length>0" class="play">
         <i class="icon-play"></i>
         <span class="text">随机播放全部</span>
       </div>
@@ -16,7 +16,7 @@
   <div class="bg-layer" ref="bgLayer"></div>
   <scroll :probe-type="probeType" :is-listen-scroll="isListenScroll" @scroll="scroll" :data="songs" class="list" ref="list">
     <div class="song-list-wrapper">
-      <song-list :songs="songs"></song-list>
+      <song-list @select="selectItem" :songs="songs"></song-list>
     </div>
     <div class="loading-container" v-show="!songs.length">
       <loading></loading>
@@ -30,6 +30,8 @@ import Scroll from 'base/scroll/scroll'
 import SongList from 'base/song-list/song-list'
 import Loading from 'base/loading/loading'
 import { prefixStyle } from 'common/js/dom'
+import { mapActions } from 'vuex'
+import { playListMixin } from 'common/js/mixin'
 
 const RESERVED_HEIGHT = 40
 const TRANSFORM = prefixStyle('transform')
@@ -50,6 +52,9 @@ export default {
       default: ''
     }
   },
+  mixins: [
+    playListMixin
+  ],
   components: {
     Scroll,
     SongList,
@@ -81,7 +86,23 @@ export default {
     },
     back() {
       this.$router.back()
-    }
+    },
+    selectItem(song, index) {
+      this.selectPlay({ list: this.songs, index })
+    },
+    random() {
+      this.randomPlay({ list: this.songs })
+    },
+    handlePlayList(playList) {
+      // 处理播放器造成的 滚动覆盖问题
+      const bottom = playList.length > 0 ? '60px' : ''
+      this.$refs.list.$el.style.bottom = bottom
+      this.$refs.list.refresh()
+    },
+    ...mapActions([
+      'selectPlay',
+      'randomPlay'
+    ])
   },
   watch: {
     scrollY(newValue) {
