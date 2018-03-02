@@ -10,3 +10,6 @@ export const SET_CURRENT_INDEX = 'SET_CURRENT_INDEX'
 
 // 歌单相关
 export const SET_DISC = 'SET_DISC'
+
+// 排行榜相关
+export const SET_TOP_LIST = 'SET_TOP_LIST'
