@@ -161,7 +161,7 @@ export default {
       z-index: 50
       .icon-back
         display: block
-        padding: 10px
+        padding: 9px
         font-size: $font-size-large-x
         color: $color-theme
     .title

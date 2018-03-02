@@ -58,3 +58,25 @@ export function getPlayList() {
     return Promise.resolve(res.data)
   })
 }
+
+// 获取 歌单 对应的 歌曲列表
+export function getSongList(id) {
+  const url = 'api/getSongList'
+  const data = {
+    ...commonParams,
+    platform: 'yqq',
+    needNewCode: 0,
+    onlysong: 0,
+    loginUin: 0,
+    hostUin: 0,
+    disstid: id,
+    type: 1,
+    json: 1,
+    utf8: 1,
+    format: 'json'
+  }
+
+  return axios.get(url, { params: data }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}

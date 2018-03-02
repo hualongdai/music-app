@@ -22,6 +22,10 @@ const mutations = {
   },
   [types.SET_CURRENT_INDEX](state, index) {
     state.currentIndex = index
+  },
+  // 歌单相关
+  [types.SET_DISC](state, disc) {
+    state.disc = disc
   }
 }
 

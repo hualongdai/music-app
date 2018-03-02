@@ -30,6 +30,7 @@
         <loading></loading>
       </div>
     </scroll>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -40,6 +41,7 @@ import Loading from 'base/loading/loading'
 import { playListMixin } from 'common/js/mixin'
 import { getRecommendList, getPlayList } from 'api/recommend'
 import { ERROR_CODE_OK } from 'api/config'
+import { mapMutations } from 'vuex'
 
 export default {
   components: {
@@ -69,6 +71,10 @@ export default {
       })
     },
     selectItem(item) {
+      this.$router.push({
+        path: `/recommend/${item.dissid}`
+      })
+      this.setDisc(item)
     },
     getPlayListData() {
       getPlayList().then((res) => {
@@ -89,7 +95,10 @@ export default {
       const bottom = playList.length > 0 ? '60px' : ''
       this.$refs.recommend.style.bottom = bottom
       this.$refs.scroll.refresh()
-    }
+    },
+    ...mapMutations({
+      setDisc: 'SET_DISC'
+    })
   }
 }
 </script>
