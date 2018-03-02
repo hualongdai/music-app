@@ -14,3 +14,6 @@ export const disc = state => state.disc
 
 // 排行榜
 export const topList = state => state.topList
+
+// 历史搜索
+export const historySearch = state => state.historySearch

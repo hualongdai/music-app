@@ -23,6 +23,14 @@ export default {
     isListenScroll: { // 是否监听滚动
       type: Boolean,
       default: false
+    },
+    pullUp: {
+      type: Boolean,
+      default: false
+    },
+    beforeScroll: {
+      type: Boolean,
+      default: false
     }
   },
   mounted() {
@@ -40,6 +48,19 @@ export default {
       if (this.isListenScroll) {
         this.scroll.on('scroll', (pos) => {
           this.$emit('scroll', pos)
+        })
+      }
+      if (this.pullUp) {
+        this.scroll.on('scrollEnd', () => {
+          // 当滚动到底 + 50的buffer 的时候派发一个事件
+          if (this.scroll.y <= (this.scroll.maxScrollY + 50)) {
+            this.$emit('scrollToEnd')
+          }
+        })
+      }
+      if (this.beforeScroll) {
+        this.scroll.on('beforeScrollStart', () => {
+          this.$emit('beforeScroll')
         })
       }
     },

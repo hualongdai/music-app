@@ -16,3 +16,27 @@ export function shuffle(arr) {
   }
   return arr
 }
+
+const funcLimit = function(fn, interval, isDebounce) {
+  var timer
+  return function() {
+    let context = this
+    let args = arguments
+    var throttler = function() {
+      timer = null
+      fn.apply(context, args)
+    }
+    // 如果是 debounce，前一个函数调用的 timer会清除，前一个函数不会执行，会重新设置timer
+    // 如果是 throttle 只有timer 为空的时候 才会重新设置timer
+    if (isDebounce) clearTimeout(timer)
+    if (isDebounce || !timer) timer = setTimeout(throttler, interval)
+  }
+}
+
+export const throttle = function(fn, intetval) {
+  return funcLimit(fn, intetval, false)
+}
+
+export const debounce = function(fn, interval) {
+  return funcLimit(fn, interval, true)
+}
