@@ -131,6 +131,9 @@ export default {
     listScrolling() {
       this.$emit('scrolling')
     },
+    refresh() {
+      this.$refs.suggest.refresh()
+    },
     ...mapMutations({
       setSinger: 'SET_SINGER'
     }),
