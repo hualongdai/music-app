@@ -59,7 +59,7 @@
               <i class="icon icon-next" @click="next"></i>
             </div>
             <div class="icon i-right">
-              <i class="icon icon-not-like"></i>
+              <i class="icon" @click="toggleFavorite(currentSong)" :class="getFavoriteIcon(currentSong)"></i>
             </div>
           </div>
         </div>
@@ -80,17 +80,18 @@
             <i @click.stop="togglePlayState" class="icon-mini" :class="miniPlayIcon"></i>
           </progress-circle>
         </div>
-        <div class="control">
+        <div class="control" @click.stop="showPlaylist">
           <i class="icon-playlist"></i>
         </div>
       </div>
     </transition>
+    <playlist ref="playlist"></playlist>
     <audio ref="audio" :src="currentSong.url" @canplay="ready" @error="error" @timeupdate="updateTime" @ended="end"></audio>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 import Lyric from 'lyric-parser'
 import keyframeAnimate from 'create-keyframe-animation'
 
@@ -99,12 +100,15 @@ import { playMode } from 'common/js/config'
 import { shuffle } from 'common/js/utils'
 import ProgressBar from 'base/progress-bar/progress-bar'
 import ProgressCircle from 'base/progress-circle/progress-circle'
+import Playlist from 'components/playlist/playlist'
+import {playerMixin} from 'common/js/mixin'
 import Scroll from 'base/scroll/scroll'
 
 const TRANSFORM = prefixStyle('transform')
 const TRANSITION_DURATION = prefixStyle('transition-duration')
 
 export default {
+  mixins: [playerMixin],
   data() {
     return {
       songReady: false,
@@ -119,7 +123,8 @@ export default {
   components: {
     ProgressBar,
     ProgressCircle,
-    Scroll
+    Scroll,
+    Playlist
   },
   created() {
     this.touch = {}
@@ -145,12 +150,8 @@ export default {
     },
     ...mapGetters([
       'fullScreen',
-      'playList',
-      'currentSong',
       'playing',
-      'currentIndex',
-      'mode',
-      'sequenceList'
+      'currentIndex'
     ])
   },
   methods: {
@@ -258,6 +259,7 @@ export default {
     },
     ready() {
       this.songReady = true
+      this.savePlayHistory(this.currentSong)
     },
     error() {
       this.songReady = true
@@ -393,14 +395,15 @@ export default {
       this.$refs.middleL.style[TRANSITION_DURATION] = `${time}ms`
       this.touch.initiated = false
     },
+    showPlaylist() {
+      this.$refs.playlist.show()
+    },
     ...mapMutations({
-      setFullScreen: 'SET_FULL_SCREEN',
-      setPlayState: 'SET_PLAYING_STATE',
-      setCurrentIndex: 'SET_CURRENT_INDEX',
-      setPlayMode: 'SET_PLAY_MODE',
-      setPlayList: 'SET_PLAY_LIST',
-      setPlayingState: 'SET_PLAYING_STATE'
-    })
+      setFullScreen: 'SET_FULL_SCREEN'
+    }),
+    ...mapActions([
+      'savePlayHistory'
+    ])
   },
   watch: {
     currentSong(newValue, oldValue) {

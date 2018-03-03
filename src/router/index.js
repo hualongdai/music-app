@@ -45,5 +45,9 @@ export default new Router({
         { path: ':id', component: SingerDetail }
       ]
     }
+    // {
+    //   path: '/user',
+    //   component: UserCenter
+    // }
   ]
 })

@@ -34,6 +34,14 @@ const mutations = {
   // 历史搜索
   [types.SET_HISTORY_SEARCH](state, list) {
     state.historySearch = list
+  },
+  // 播放列表
+  [types.SET_PLAY_HISTORY](state, history) {
+    state.playHistory = history
+  },
+  // 喜欢列表
+  [types.SET_FAVORITE_LIST](state, list) {
+    state.favoriteList = list
   }
 }
 

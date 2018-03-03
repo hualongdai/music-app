@@ -9,8 +9,8 @@
           <div class="hot-key">
             <h1 class="title">热门搜索</h1>
             <ul>
-              <li @click="addQuery(item)" v-for="(item,index) in hotKeyList" class="item" :key="index">
-                <span>{{item.k}}</span>
+              <li @click="addQuery(item.k.trim())" v-for="(item,index) in hotKeyList" class="item" :key="index">
+                <span>{{item.k.trim()}}</span>
               </li>
             </ul>
           </div>
@@ -43,10 +43,10 @@ import SearchList from 'base/search-list/search-list'
 import { getHotKey } from 'api/search'
 import { ERROR_CODE_OK } from 'api/config'
 import { mapActions, mapGetters } from 'vuex'
-import { playListMixin } from 'common/js/mixin'
+import { playListMixin, searchMixin } from 'common/js/mixin'
 
 export default {
-  mixins: [playListMixin],
+  mixins: [playListMixin, searchMixin],
   components: {
     SearchBox,
     Suggest,
@@ -96,23 +96,10 @@ export default {
         }
       })
     },
-    addQuery(key) {
-      this.$refs.searchBox.setQuery(key.k)
-    },
-    onQueryChange(value) {
-      this.query = value
-    },
-    blurInput() {
-      // 滚动的时候 让input 失去焦点
-      this.$refs.searchBox.blur()
-    },
-    saveSearch() {
-      this.saveHistorySearch(this.query)
-    },
     showConfirm() {
       this.$refs.confirm.show()
     },
-    ...mapActions(['saveHistorySearch', 'deleteHistorySearch', 'clearHistorySearch'])
+    ...mapActions(['clearHistorySearch'])
   }
 }
 </script>
