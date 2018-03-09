@@ -77,7 +77,7 @@ export default {
       this.hasMore = true
       // 每次query变化 触发search 的时候重置下pageNo
       this.pageNo = 1
-      this.$refs.suggest.scrollTo(0)
+      this.$refs.suggest.scrollTo(0, 0)
 
       getSearchResult(this.query, this.pageNo, this.showSinger, PAGE_SIZE).then(res => {
         if (res.code === ERROR_CODE_OK) {

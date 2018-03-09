@@ -139,6 +139,7 @@ export default {
         display: block
         padding: 10px
         font-size: $font-size-large-x
+        margin-top 5px
         color: $color-theme
     .switches-wrapper
       margin: 10px 0 30px 0

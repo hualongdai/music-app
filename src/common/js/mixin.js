@@ -37,6 +37,9 @@ export const playerMixin = {
     iconMode() {
       return this.mode === playMode.sequence ? 'icon-sequence' : this.mode === playMode.loop ? 'icon-loop' : 'icon-random'
     },
+    favoriteIcon() {
+      return this.getFavoriteIcon(this.currentSong)
+    },
     ...mapGetters([
       'sequenceList',
       'playList',
@@ -87,7 +90,7 @@ export const playerMixin = {
       setPlayMode: 'SET_PLAY_MODE',
       setPlayList: 'SET_PLAY_LIST',
       setCurrentIndex: 'SET_CURRENT_INDEX',
-      setPlayState: 'SET_PLAYING_STATE'
+      setPlayingState: 'SET_PLAYING_STATE'
     }),
     ...mapActions([
       'saveFavoriteList',

@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" @touchmove.prevent>
     <music-header></music-header>
     <tab></tab>
     <keep-alive>
@@ -9,7 +9,7 @@
   </div>
 </template>
 
-<script type="text/ecmascript-6">
+<script>
 import MusicHeader from 'components/header/header'
 import Tab from 'components/tab/tab'
 import Player from 'components/player/player'

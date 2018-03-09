@@ -4,3 +4,5 @@ export const playMode = {
   loop: 1,
   random: 2
 }
+
+export const isDEV = process.env.NODE_ENV !== 'production'
